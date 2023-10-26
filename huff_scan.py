@@ -1,3 +1,5 @@
+import timeit
+
 def read_text_file():
     try:
         with open("inputs/random_100k_input.txt", 'r') as file:
@@ -23,5 +25,14 @@ def character_frequency(string):
 
 inString = read_text_file()
 
-frequency = character_frequency(inString)
-print(frequency)
+#frequency = character_frequency(inString)
+#print(frequency)
+n = 100
+exec_time = timeit.timeit("character_frequency(inString)", globals=locals(), number=n) / n
+
+print("Exec time=" + str(exec_time))
+
+# Decoding:
+
+# https://dl.acm.org/doi/fullHtml/10.1145/3473465.3473485#:~:text=The%20Huffman%20algorithm%20is%20parallelized,one%20bit%20at%20a%20time.
+# https://users.cecs.anu.edu.au/~Eric.McCreath/papers/JohnstonMcCreathHuff2017.pdf
