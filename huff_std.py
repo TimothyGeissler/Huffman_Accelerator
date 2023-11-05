@@ -150,3 +150,6 @@ def decode_string(s, map):
 
 decoded = decode_string(encoded, map)
 print("Decoded=" + decoded)
+
+if decoded == inString:
+	print("Success!")

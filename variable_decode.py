@@ -1,5 +1,7 @@
-# A Huffman Tree Node 
+# 1-wide encode
+# Variable width decode
 import heapq 
+import math
 
 
 class node: 
@@ -132,8 +134,19 @@ print("\nMap:\n" + str(map))
 encoded = encode(inString, map)
 print("\nEncoded=" + encoded)
 
+# Perform parallel decodes
+def decode_wide(s, map, width):
+	job_list = [] #list of parallel decodes
+	
+	parts = split_string(s, width)
 
-def decode_string(s, map):
+	for p in parts:
+		job_list.append(decode_helper(p, map))
+	
+	print(job_list)
+
+# individual decoder
+def decode_helper(s, map):
     decoded_string = ""
     current_code = ""
 
@@ -147,6 +160,32 @@ def decode_string(s, map):
                 break
 
     return decoded_string
+	
+# Split string into n chunks
+def split_string(s, width):
+	part_length = len(s) // width
+	remaining_chars = len(s) % width
+	
+	parts = []
+	start_index = 0
+	
+	for i in range(width):
+		end_index = start_index + part_length
+		if remaining_chars > 0:
+			end_index += 1
+			remaining_chars -= 1
+			
+		part = s[start_index:end_index]
+		parts.append(part)
+		
+		start_index = end_index
 
-decoded = decode_string(encoded, map)
-print("Decoded=" + decoded)
+	return parts
+	
+
+
+decoded = decode_wide(encoded, map, 4)
+#print("Decoded=" + decoded)
+
+if decoded == inString:
+	print("Success!")
