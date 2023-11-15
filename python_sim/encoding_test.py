@@ -18,6 +18,9 @@ if __name__ == "__main__":
             done=True
         else:
             #cycle 1
+            print("step1")
+            for node in arr:
+                print("queue_pos: %d, symbol: %s, freq: %d" % (node.queue_pos, node.symbol, node.freq)) 
 
             #find combined value of first two elements in queue
             combined_val = reg0+reg1
@@ -42,6 +45,10 @@ if __name__ == "__main__":
                 node.next_queue_pos = node.queue_pos
 
             #cycle 2
+            print("step2")
+            for node in arr:
+                print("queue_pos: %d, symbol: %s, freq: %d" % (node.queue_pos, node.symbol, node.freq)) 
+
             num_shifted=0
             #update next queue positions based on relative frequencies
             for node in arr:
@@ -63,9 +70,9 @@ if __name__ == "__main__":
             for node in arr: #clock in new values
                 node.queue_pos = node.next_queue_pos
                 node.next_queue_pos = node.queue_pos
-        print("---new translation---")
-        for character in translation_table:
-                    print("character: %s translation: %s" % (character, translation_table[character]))
+        #print("---new translation---")
+        # for character in translation_table:
+        #             print("character: %s translation: %s" % (character, translation_table[character]))
     
 
         
