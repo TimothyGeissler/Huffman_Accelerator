@@ -25,18 +25,19 @@ module s_box_tb;
   // Stimulus generation
   initial begin
     // Apply inputs and wait for some time
-    #10 inputByte = 8'h63; // Replace with your test values
-    #10 inputByte = 8'h7C;
-    #10 inputByte = 8'hF2;
-    // Add more test cases as needed
+    inputByte = 8'h9a; // Replace with your test values
+    #10
+    assert (outputByte == 8'hb8) $display ("TEST PASSED");
+    inputByte = 8'h9f;
+    #10 
+    assert (outputByte == 8'hdb) $display ("TEST PASSED");
+    inputByte = 8'h06;
+    #10
+    assert (outputByte == 8'h6f) $display ("TEST PASSED");
 
     // End simulation after some time
     #100 $finish;
   end
 
-  // Display results
-  always @(posedge clk) begin
-    $display("Time=%0t inputByte=%h outputByte=%h", $time, inputByte, outputByte);
-  end
 
 endmodule

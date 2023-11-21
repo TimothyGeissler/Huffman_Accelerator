@@ -19,6 +19,14 @@ Sbox = [
 
 verilog_sbox = [f"8'h{value:02X}" for value in Sbox]
 
-verilog_code = f"reg [7:0] rijndael_sbox [255:0] = {{\n  {', '.join(verilog_sbox)}\n}};"
+print("case(i)")
+index = 0
+for v in verilog_sbox:
+    print("\t8'd" + str(index) + ": subByte = " + v.lower() + ";")
+    index+=1
 
-print(verilog_code)
+#print(verilog_sbox)
+
+#verilog_code = f"reg [7:0] rijndael_sbox [255:0] = {{\n  {', '.join(verilog_sbox)}\n}};"
+
+#print(verilog_code)

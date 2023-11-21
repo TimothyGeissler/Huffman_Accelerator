@@ -26,7 +26,7 @@ unsigned char substituteByte(unsigned char inputByte) {
 int main(int argc, char const *argv[]) {
     
 
-    unsigned char originalByte = 0x9a;
+    unsigned char originalByte = 0x06;
     unsigned char substitutedByte = substituteByte(originalByte);
 
     printf("Original Byte: 0x%02X\n", originalByte);
