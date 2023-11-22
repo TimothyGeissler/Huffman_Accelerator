@@ -18,7 +18,7 @@ module encryptor_tb();
 
         test_input = 128'h11111111000000001111111100000000;
         #100
-        //$display("%b", test_output);
+        $display("Output=%h", test_output);
         $finish;
     end
 

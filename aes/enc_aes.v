@@ -19,7 +19,6 @@ module enc_aes(
     integer i, j;
 
     // SUB stage components
-    //reg [7:0] subTemp; // Temporary substitute reg
     reg [7:0] inputSub;
     wire [7:0] outputSub;
 
@@ -42,17 +41,17 @@ module enc_aes(
                 state = `SUB; //Goto next stage
             end
             `SUB: begin
-                //s_box sub_box()
                 // Iterate through the matrix
                 for (i = 0; i < 4; i = i + 1) begin
                     for (j = 0 ; j < 4; j = j + 1) begin
                         inputSub = row[i][j*8 +: 8];
-                        row[i][j*8 +: 8] = outputSub;
-                        $display("Substitute:%h", outputSub);
+                        #1 // Wait for some gate delay
+                        row[i][j*8 +: 7] = outputSub;
                     end
+                    //$display("Substituted row=%h", row[i]);
                     
                 end
-                state = `SHIFT; //Goto next stage
+                state = `FINISH; //`SHIFT; //Goto next stage
             end
             `SHIFT: begin
                 // Row 2 lshift = 1
@@ -72,7 +71,8 @@ module enc_aes(
             `FINISH: begin
                 // Pack matrix back into array
                 for (i = 0; i < 4; i = i + 1) begin
-                    outStream[i*256 +: 32] = row[i];
+                    $display("Substituted row=%h", row[i]);
+                    outStream[i*32 +: 31] = row[i];
                 end
             end
         endcase
