@@ -5,24 +5,38 @@
 `define ROUND 3'b011
 `define FINISH 3'b110
 
+`include "sub_box/s_box.v"
+
 module enc_aes(
     input clk,
-    input [1023:0] inStream,
-    output reg [1023:0] outStream
+    input [127:0] inStream,
+    output reg [127:0] outStream
 );
 
-
+    // MISC components
     reg [2:0] state = `INIT; // Start at init stage
     reg [31:0] row[3:0];
     integer i, j;
 
-    always @(posedge clk) begin
+    // SUB stage components
+    //reg [7:0] subTemp; // Temporary substitute reg
+    reg [7:0] inputSub;
+    wire [7:0] outputSub;
 
+    // Instantiate substitution table
+    s_box sub_table (
+    .clk(clk),
+    .inByte(inputSub),
+    .subByte(outputSub)
+  );
+
+    always @(posedge clk) begin
         case (state)
             `INIT: begin
                 // Unpack array into matrix
+                $display("instream=%h", inStream);
                 for (i = 0; i < 4; i = i + 1) begin
-                    row[i] = inStream[i*256 +: 32];
+                    row[i] = inStream[i*32 +: 31];
                 end
                 $display("##INPUT##\nrow0=%h\nrow1=%h\nrow2=%h\nrow3=%h", row[0], row[1], row[2], row[3]);
                 state = `SUB; //Goto next stage
@@ -31,9 +45,12 @@ module enc_aes(
                 //s_box sub_box()
                 // Iterate through the matrix
                 for (i = 0; i < 4; i = i + 1) begin
-                    for (j = 0; i < 32; j = j + 1) begin
-                        row[i][j] = sub_box[row[i][j]];
+                    for (j = 0 ; j < 4; j = j + 1) begin
+                        inputSub = row[i][j*8 +: 8];
+                        row[i][j*8 +: 8] = outputSub;
+                        $display("Substitute:%h", outputSub);
                     end
+                    
                 end
                 state = `SHIFT; //Goto next stage
             end

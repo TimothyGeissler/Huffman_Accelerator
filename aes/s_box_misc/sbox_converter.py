@@ -22,7 +22,7 @@ verilog_sbox = [f"8'h{value:02X}" for value in Sbox]
 print("case(i)")
 index = 0
 for v in verilog_sbox:
-    print("\t8'd" + str(index) + ": subByte = " + v.lower() + ";")
+    print("\t8'd" + str(index) + ": subByte <= " + v.lower() + ";")
     index+=1
 
 #print(verilog_sbox)

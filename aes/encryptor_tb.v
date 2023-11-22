@@ -1,7 +1,7 @@
 module encryptor_tb();
     reg clk;
-    reg [1023:0] test_input;
-    wire [1023:0] test_output;
+    reg [127:0] test_input;
+    wire [127:0] test_output;
 
     // Instantiate the module under test
     enc_aes uut (clk, test_input, test_output);
@@ -13,7 +13,10 @@ module encryptor_tb();
     end
 
     initial begin
-        test_input = 1024'b0;
+        $dumpfile("gtk_encryptor_dump.vcd");
+        $dumpvars(0, uut);
+
+        test_input = 128'h11111111000000001111111100000000;
         #100
         //$display("%b", test_output);
         $finish;
