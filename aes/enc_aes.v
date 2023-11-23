@@ -51,7 +51,7 @@ module enc_aes(
                     //$display("Substituted row=%h", row[i]);
                     
                 end
-                state = `FINISH; //`SHIFT; //Goto next stage
+                state = `SHIFT; //Goto next stage
             end
             `SHIFT: begin
                 // Row 2 lshift = 1
