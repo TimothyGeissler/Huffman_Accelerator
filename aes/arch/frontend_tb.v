@@ -12,12 +12,12 @@ module frontend_tb();
         forever #5 clk = ~clk;
     end
 
+    // Check if frontend splits input & stitches output
     initial begin
         test_input = 4096'b0;
         $display("%h", test_input);
-        #100
-        //assert(test_output == 4096'b1) $display("TEST PASSED");
-        $display("%h", test_output);
+        #10
+        assert(test_output == '1) $display("TEST PASSED");
         $finish;
     end
 
