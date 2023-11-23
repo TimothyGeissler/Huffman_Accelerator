@@ -1,3 +1,5 @@
+// This is a basic arch. implementation - just 32 parallel enc. cores. No buffers/submodules/caches .etc
+
 `include "test_enc.v"
 
 module frontend(
