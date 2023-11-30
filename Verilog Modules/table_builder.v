@@ -84,9 +84,9 @@ always @(posedge ctrl_start) begin
 end
 
 
-always @(posedge clk) begin
+always @(negedge clk) begin
     if (!ctrl_start && next_step == 2'b1) begin
-        next_step <= 2'd2;
+        next_step <= 2'd3;
         for(index=0; index<6; index=index+1) begin
             if (rdQueuePos[index] == 8'b0) begin
                 ctrl_wrFreq[index] <= 1;
@@ -97,7 +97,6 @@ always @(posedge clk) begin
                 ctrl_wrQueuePos[index] <= 1;
                 ctrl_wrFreq[index] <= 1;
                 ctrl_wrHead[index] <= 1;
-
                 wrQueuePos[index] <= 8'b0;
                 wrFreq[index] <= combined_freq;
                 wrHead[index] <= 0;
@@ -111,7 +110,7 @@ always @(posedge clk) begin
         next_step <= 2'd3;
     end
     else if (!ctrl_start && next_step == 2'd3) begin
-        next_step <= 2'd0;
+        next_step <= 2'd1;
         for(index=0; index<6; index=index+1) begin
             ctrl_wrQueuePos[index]<=1;
             ctrl_wrFreq[index]<=0;
